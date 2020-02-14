@@ -1,7 +1,8 @@
-// This script provides a function for connecting to the database.
+// Connect to a database about faculty
 
 const mongoose = require('mongoose');
 
+// Export this function
 module.exports = function() {
 
   // Avoid warnings
@@ -11,9 +12,9 @@ module.exports = function() {
   mongoose.set('useFindAndModify', false);
 
   // Start connecting
-  mongoose.connect('mongodb://localhost/voters');
+  mongoose.connect('mongodb://localhost/faculty');
 
-  // Log errors
+  // Make sure we see any errors
   mongoose.connection.on('error', function(error) {
     console.error(error.stack);
   });
