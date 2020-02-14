@@ -3,10 +3,16 @@
 const mongoose = require('mongoose');
 const connect = require('./db');
 const Professor = require('./schema');
+const fs = require('fs') 
 
-fetch('voters.csv')
-  .then(response => response.text())
-  .then(text => console.log(text))
+fs.readFile('./voters.csv', 'utf-8', (err, data) => { 
+    if (err) throw err; 
+  
+    // Converting Raw Buffer to text 
+    // data using tostring function. 
+    console.log(data); 
+}) 
+
 
 // connect(); // To the database
 //
