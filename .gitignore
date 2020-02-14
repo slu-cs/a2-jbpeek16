@@ -1,3 +1,5 @@
 .DS_Store
 Thumbs.db
 ._*
+voters.csv
+node_modules
