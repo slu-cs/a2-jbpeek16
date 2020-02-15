@@ -13,31 +13,26 @@ if (file) voterArray = file.split(/\r?\n/);
 let splitVoterArray = [];
 voterArray.forEach(voter => splitVoterArray.push(voter.split(",")));
 
-let voterObjectArray = [];
-voterArray.forEach(voter => {
-  const voterHistory = (voter.length === 4) ? voter[3] : ""
-  voterObjectArray.push(new Voter({
-    name: {first: voter[0], last: voter[1]},
-    zip: voter[2],
-    history: voterHistory
-  }))
-});
-
 connect(); // To the database
 
+async function writeVoters () {
+  const voters = splitVoterArray.map(async voter => {
+    const voterHistory = (voter.length === 4) ? voter[3] : ""
+    const currVoter = new Voter({
+      name: {first: voter[0], last: voter[1]},
+      zip: voter[2],
+      history: voterHistory
+    })
+    const response = await currVoter.save();
+    return response;
+  });
+  return voters;
+}
+
 // Reset the data
+console.log()
 mongoose.connection.dropDatabase()
-  .then(splitVoterArray => {
-    Promise.all(
-      splitVoterArray.map(voter =>
-        new Voter({
-          name: {first: voter[0], last: voter[1]},
-          zip: voter[2],
-          history: voterHistory
-        }).save()
-      )
-    )
-  })
+  .then(Promise.all(writeVoters()))
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
