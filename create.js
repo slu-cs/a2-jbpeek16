@@ -43,7 +43,10 @@ mongoose.connection.dropDatabase()
   .then(async function() {
     await voters.reduce(async (previousPromise, nextVoter) => {
       await previousPromise;
-      const result = await nextVoter.save();
+      let result;
+      if (nextVoter) {
+        result = await nextVoter.save();
+      }
       console.log(result);
     }, Promise.resolve());
   })
