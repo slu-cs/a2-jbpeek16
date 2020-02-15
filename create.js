@@ -5,14 +5,11 @@ const connect = require('./db');
 const Voter = require('./schema');
 const fs = require('fs')
 
-let file;
 let voterArray = [];
-fs.readFile('./voters.csv', 'utf-8', (error, data) => {
-    if (error) throw error;
-    file = data; 
-})
+const file = fs.readFileSync('./voters.csv', 'utf-8')
 
-if (file) file.split(/\r?\n/).split(",");
+if (file) voterArray = file.split(/\r?\n/);
+voterArray.map(voter => voter.split(","));
 
 let voterObjectArray = [];
 

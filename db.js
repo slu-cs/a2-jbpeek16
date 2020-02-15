@@ -1,4 +1,4 @@
-// Connect to a database about faculty
+// This script provides a function for connecting to the database.
 
 const mongoose = require('mongoose');
 
@@ -12,9 +12,9 @@ module.exports = function() {
   mongoose.set('useFindAndModify', false);
 
   // Start connecting
-  mongoose.connect('mongodb://localhost/faculty');
+  mongoose.connect('mongodb://localhost/voters');
 
-  // Make sure we see any errors
+  // Log errors
   mongoose.connection.on('error', function(error) {
     console.error(error.stack);
   });
