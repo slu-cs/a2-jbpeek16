@@ -33,16 +33,15 @@ const quick = [
   }, Promise.resolve());
 })
 
-const voters = quick.map(async voter => {
+const voters = quick.map(voter => {
   if (voter.length >= 3) {
     const voterHistory = (voter.length === 4) ? voter[3] : ""
-    const currVoter = new Voter({
+    new Voter({
       firstName: voter[0], 
       lastName: voter[1],
       zip: voter[2],
       history: voterHistory
     })
-    return currVoter.save();
   }
 })
 
@@ -50,9 +49,9 @@ const voters = quick.map(async voter => {
 console.log()
 mongoose.connection.dropDatabase()
   (async function() {
-    await voters.reduce(async (previousPromise, nextAsyncFunction) => {
+    await voters.reduce(async (previousPromise, nextVoter) => {
       await previousPromise;
-      const result = await nextAsyncFunction();
+      const result = await nextVoter.save();
       console.log(result);
     }, Promise.resolve());
   })
