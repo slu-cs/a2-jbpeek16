@@ -28,7 +28,7 @@ const queries = [
   Voter.find().sort('-lastName').limit(1),
 
   // How many zip codes does the county contain?
-  Voter.distinct('zip').length
+  Voter.distinctAndCount('zip')
 
 ];
 
