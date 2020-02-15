@@ -27,16 +27,18 @@ const quick = [
 
 async function writeVoters () {
   const voters = quick.map(async voter => {
-    const voterHistory = (voter.length === 4) ? voter[3] : ""
-    const currVoter = new Voter({
-      firstName: voter[0], 
-      lastName: voter[1],
-      zip: voter[2],
-      history: voterHistory
-    })
-    console.log(currVoter);
-    const response = await currVoter.save();
-    return response;
+    if (voter.length >= 3) {
+      const voterHistory = (voter.length === 4) ? voter[3] : ""
+      const currVoter = new Voter({
+        firstName: voter[0], 
+        lastName: voter[1],
+        zip: voter[2],
+        history: voterHistory
+      })
+      console.log(currVoter);
+      const response = await currVoter.save();
+      return response;
+    } else {return null}
   });
   return voters;
 }
@@ -44,7 +46,20 @@ async function writeVoters () {
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  .then(writeVoters())
+  .then(quick.map(async voter => {
+    if (voter.length >= 3) {
+      const voterHistory = (voter.length === 4) ? voter[3] : ""
+      const currVoter = new Voter({
+        firstName: voter[0], 
+        lastName: voter[1],
+        zip: voter[2],
+        history: voterHistory
+      })
+      console.log(currVoter);
+      const response = await currVoter.save();
+      return response;
+    } else {return null}
+  }))
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
