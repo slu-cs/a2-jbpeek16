@@ -25,28 +25,10 @@ const quick = [
   splitVoterArray[6],
 ]
 
-async function writeVoters () {
-  const voters = quick.map(async voter => {
-    if (voter.length >= 3) {
-      const voterHistory = (voter.length === 4) ? voter[3] : ""
-      const currVoter = new Voter({
-        firstName: voter[0], 
-        lastName: voter[1],
-        zip: voter[2],
-        history: voterHistory
-      })
-      console.log(currVoter);
-      const response = await currVoter.save();
-      return response;
-    } else {return null}
-  });
-  return voters;
-}
-
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  .then(quick.map(async voter => {
+  await quick.map(voter => {
     if (voter.length >= 3) {
       const voterHistory = (voter.length === 4) ? voter[3] : ""
       const currVoter = new Voter({
@@ -55,11 +37,10 @@ mongoose.connection.dropDatabase()
         zip: voter[2],
         history: voterHistory
       })
-      console.log(currVoter);
-      const response = await currVoter.save()
-      .then(console.log(response));
-    } else {return null}
-  }))
+      currVoter.save()
+      .catch(error => console.error(error.stack));
+    }
+  })
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
