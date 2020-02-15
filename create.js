@@ -34,7 +34,7 @@ mongoose.connection.dropDatabase()
     Promise.all(
       voterObjectArray.map(voterObject =>
         voterObject.save()
-      )
+      ).then(response => console.log(response))
     )
   })
   .then(() => mongoose.connection.close())
