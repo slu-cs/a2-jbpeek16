@@ -28,7 +28,7 @@ const queries = [
   Voter.find().sort('-lastName').limit(1),
 
   // How many zip codes does the county contain?
-  Voter.distinctAndCount('zip')
+  Voter.distinct('zip')
 
 ];
 
@@ -42,6 +42,6 @@ Promise.all(queries)
     );
     console.log(results[2], ' people voted in the 2016 general election.');
     console.log(results[3].map(p => p.lastName), ' is the last name in the county alphabetically.');
-    console.log('There are ', results[4], ' zip codes in St. Lawrence County.');
+    console.log('There are ', results[4].length, ' zip codes in St. Lawrence County.');
     mongoose.connection.close();
   }).catch(error => console.error(error.stack));
