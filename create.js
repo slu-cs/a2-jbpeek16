@@ -35,6 +35,8 @@ const voters = quick.map(voter => {
   }
 })
 
+console.log(voters);
+
 connect(); // To the database
 
 // Reset the data
