@@ -15,14 +15,26 @@ voterArray.forEach(voter => splitVoterArray.push(voter.split(",")));
 
 connect(); // To the database
 
+const quick = [
+  splitVoterArray[0],
+  splitVoterArray[1],
+  splitVoterArray[2],
+  splitVoterArray[3],
+  splitVoterArray[4],
+  splitVoterArray[5],
+  splitVoterArray[6],
+]
+
 async function writeVoters () {
-  const voters = splitVoterArray.map(async voter => {
+  const voters = quick.map(async voter => {
     const voterHistory = (voter.length === 4) ? voter[3] : ""
     const currVoter = new Voter({
-      name: {first: voter[0], last: voter[1]},
+      firstName: voter[0], 
+      lastName: voter[1],
       zip: voter[2],
       history: voterHistory
     })
+    console.log(currVoter);
     const response = await currVoter.save();
     return response;
   });
@@ -32,7 +44,7 @@ async function writeVoters () {
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  .then(Promise.all(writeVoters()))
+  .then(writeVoters())
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
