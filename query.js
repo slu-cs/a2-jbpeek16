@@ -31,11 +31,11 @@ Promise.all(queries)
     console.log('There are ', results[0], ' resgistered voters in Canton');
     console.log();
     console.log(
-      'The full names of all voters with the first name Starr are: ',
+      'The full names of all voters in the county with the first name Starr are: ',
       results[1].map(p => p.firstName + " " + p.lastName)
     );
     console.log();
-    console.log(results[2], ' people voted in the 2016 general election.');
+    console.log(results[2], ' people voted in the 2016 general election in St. Lawrence County.');
     console.log();
     console.log(results[3].map(p => p.lastName), ' is the last name in the county alphabetically.');
     console.log();
