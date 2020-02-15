@@ -41,7 +41,7 @@ const voters = splitVoterArray.map(async voter => {
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  .then(voters)
+  Promise.all(voters)
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
