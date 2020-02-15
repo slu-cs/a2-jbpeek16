@@ -10,10 +10,10 @@ let voterArray = [];
 fs.readFile('./voters.csv', 'utf-8', (error, data) => {
     if (error) throw error;
     file = data; 
-}).then(() => voterArray = file.split(/\r?\n/).split(","));
+})
 
+if (file) file.split(/\r?\n/).split(",");
 
-const voterArray = file.split(/\r?\n/).split(",");
 let voterObjectArray = [];
 
 voterArray.forEach(voter => {
@@ -30,7 +30,7 @@ connect(); // To the database
 
 // Reset the data
 mongoose.connection.dropDatabase()
-  .then(voterObjectArray => {
+  .then(() => {
     Promise.all(
       voterObjectArray.map(voterObject =>
         voterObject.save()

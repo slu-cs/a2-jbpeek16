@@ -38,7 +38,7 @@ Promise.all(queries)
     console.log('There are ', results[0], ' resgistered voters in Canton');
     console.log(
       'The full names of all voters with the first name Starr are: ',
-      results[1].map(p => `${p.name.first} ${p.name.last})
+      results[1].map(p => `${p.name.first} ${p.name.last}`)
     );
     console.log(results[2], ' people voted in the 2016 general election.');
     console.log(results[3].map(p => p.name.last), ' is the last name in the county alphabetically.');
