@@ -6,15 +6,17 @@ const Voter = require('./schema');
 const fs = require('fs')
 
 let file;
+let voterArray = [];
 fs.readFile('./voters.csv', 'utf-8', (error, data) => {
     if (error) throw error;
     file = data; 
-})
+}).then(() => voterArray = file.split(/\r?\n/).split(","));
+
 
 const voterArray = file.split(/\r?\n/).split(",");
 let voterObjectArray = [];
 
-voterArray.array.forEach(voter => {
+voterArray.forEach(voter => {
   if (voter.length === 4) {
     voterObjectArray.push(new Voter({
       name: {first: voter[0], last: voter[1]},
