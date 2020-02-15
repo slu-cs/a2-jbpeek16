@@ -25,7 +25,15 @@ const quick = [
   splitVoterArray[6],
 ]
 
-const voters = splitVoterArray.map(async voter => {
+(async function() {
+  await quick.reduce(async (previousPromise, nextAsyncFunction) => {
+    await previousPromise;
+    const result = await nextAsyncFunction();
+    console.log(result);
+  }, Promise.resolve());
+})
+
+const voters = quick.map(async voter => {
   if (voter.length >= 3) {
     const voterHistory = (voter.length === 4) ? voter[3] : ""
     const currVoter = new Voter({
@@ -41,7 +49,13 @@ const voters = splitVoterArray.map(async voter => {
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  Promise.all(voters)
+  (async function() {
+    await voters.reduce(async (previousPromise, nextAsyncFunction) => {
+      await previousPromise;
+      const result = await nextAsyncFunction();
+      console.log(result);
+    }, Promise.resolve());
+  })
   .then(() => mongoose.connection.close())
   .then(() => console.log('Database is ready.'))
   .catch(error => console.error(error.stack));
