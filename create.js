@@ -47,7 +47,6 @@ mongoose.connection.dropDatabase()
       if (nextVoter) {
         result = await nextVoter.save();
       }
-      console.log(result);
     }, Promise.resolve());
   })
   .then(() => mongoose.connection.close())
