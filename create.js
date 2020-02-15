@@ -40,10 +40,10 @@ connect(); // To the database
 
 // Reset the data
 mongoose.connection.dropDatabase()
+  .then(console.log('Writing voter data to the database.'))
   .then(async function() {
     await voters.reduce(async (previousPromise, nextVoter) => {
       await previousPromise;
-      let result;
       if (nextVoter) {
         result = await nextVoter.save();
       }
