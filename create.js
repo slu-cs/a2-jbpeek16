@@ -13,8 +13,6 @@ if (file) voterArray = file.split(/\r?\n/);
 let splitVoterArray = [];
 voterArray.forEach(voter => splitVoterArray.push(voter.split(",")));
 
-connect(); // To the database
-
 const quick = [
   splitVoterArray[0],
   splitVoterArray[1],
@@ -37,10 +35,12 @@ const voters = quick.map(voter => {
   }
 })
 
+connect(); // To the database
+
 // Reset the data
 console.log()
 mongoose.connection.dropDatabase()
-  (async function() {
+  .then(async function() {
     await voters.reduce(async (previousPromise, nextVoter) => {
       await previousPromise;
       const result = await nextVoter.save();
