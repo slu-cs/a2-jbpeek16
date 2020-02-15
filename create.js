@@ -26,7 +26,7 @@ const quick = [
 const voters = quick.map(voter => {
   if (voter.length >= 3) {
     const voterHistory = (voter.length === 4) ? voter[3] : ""
-    new Voter({
+    return new Voter({
       firstName: voter[0], 
       lastName: voter[1],
       zip: voter[2],
