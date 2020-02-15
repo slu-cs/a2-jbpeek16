@@ -1,17 +1,10 @@
-// Query the faculty database
+// Query the Voter database
 
 const mongoose = require('mongoose');
 const connect = require('./db');
 const Voter = require('./schema');
 
 connect(); // To the database
-
-/*// What documents are in the collection?
-const query = Professor.find();
-query.exec(function(error, professors) {
-  if (error) console.error(error.stack);
-  console.log(professors);
-});*/
 
 const queries = [
 
@@ -36,12 +29,16 @@ const queries = [
 Promise.all(queries)
   .then(function(results) {
     console.log('There are ', results[0], ' resgistered voters in Canton');
+    console.log();
     console.log(
       'The full names of all voters with the first name Starr are: ',
       results[1].map(p => p.firstName + " " + p.lastName)
     );
+    console.log();
     console.log(results[2], ' people voted in the 2016 general election.');
+    console.log();
     console.log(results[3].map(p => p.lastName), ' is the last name in the county alphabetically.');
+    console.log();
     console.log('There are ', results[4].length, ' zip codes in St. Lawrence County.');
     mongoose.connection.close();
   }).catch(error => console.error(error.stack));
