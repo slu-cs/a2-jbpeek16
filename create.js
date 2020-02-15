@@ -56,8 +56,8 @@ mongoose.connection.dropDatabase()
         history: voterHistory
       })
       console.log(currVoter);
-      const response = await currVoter.save();
-      return response;
+      const response = await currVoter.save()
+      .then(console.log(response));
     } else {return null}
   }))
   .then(() => mongoose.connection.close())
